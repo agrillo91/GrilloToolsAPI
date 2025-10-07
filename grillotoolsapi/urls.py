@@ -17,6 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from django.http import HttpResponse
+
+# Vista de prueba para la raíz
+def home(request):
+    return HttpResponse("¡API funcionando en Render!")
+
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),  # Mantener admin
+    path('', home),                   # Añadir ruta raíz
 ]
