@@ -29,6 +29,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 if not SECRET_KEY:
     raise ValueError("No se ha definido SECRET_KEY. Añádela al archivo .env o al entorno de producción.")
 
+LICENSE_SERVER_SECRET = os.getenv('LICENSE_SERVER_SECRET')
+if not LICENSE_SERVER_SECRET:
+    raise ValueError("No se ha definido LICENSE_SERVER_SECRET.")
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
@@ -43,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'licenseManager',
 ]
 
 MIDDLEWARE = [
@@ -85,8 +90,6 @@ DATABASES = {
         conn_max_age=600,  # 600 segundos = 10 minutos
     )
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
