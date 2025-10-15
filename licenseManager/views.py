@@ -1,7 +1,8 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-import json, hashlib
+import json, hashlib, jwt
+from datetime import timedelta, datetime
 
 from .models import LicenseManager as License
 
@@ -36,8 +37,60 @@ def verify_license(request):
             if signature != expected_signature:
                 return JsonResponse({"valid": False, "reason": "Firma inválida"})
 
-        # Todo correcto: licencia activa y firma (si se proporcionó) válida
-        return JsonResponse({"valid": True, "user": license_obj.email})
+        # 🔒 Crear token JWT
+        payload = {
+            "email": email,
+            "key": key,
+            "exp": datetime.now(datetime.timezone.utc()) + timedelta(days=7),  # Expira en 7 días
+            "iat": datetime.now(datetime.timezone.utc()),
+        }
+
+        token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
+
+        return JsonResponse({
+            "valid": True,
+            "user": license_obj.email,
+            "token": token
+        })
+    
+    except Exception as e:
+        return JsonResponse({"valid": False, "error": str(e)}, status=500)
+
+# Validate Token
+def validate_token(request):
+    """Valida el JWT enviado por el plugin."""
+    if request.method != "POST":
+        return JsonResponse({"error": "Método no permitido"}, status=405)
+
+    try:
+        import json
+        data = json.loads(request.body)
+        token = data.get("token")
+
+        if not token:
+            return JsonResponse({"valid": False, "reason": "Token no proporcionado"}, status=400)
+
+        try:
+            # Decodificar el token
+            decoded = jwt.decode(token, settings.LICENSE_SERVER_SECRET, algorithms=["HS256"])
+            email = decoded.get("email")
+            key = decoded.get("key")
+
+            # Buscar la licencia en la base de datos
+            license_obj = License.objects.filter(email=email, key=key).first()
+
+            if not license_obj:
+                return JsonResponse({"valid": False, "reason": "Licencia no encontrada"})
+            if not license_obj.is_active:
+                return JsonResponse({"valid": False, "reason": "Licencia inactiva"})
+
+            # Si todo es correcto
+            return JsonResponse({"valid": True, "user": email})
+
+        except jwt.ExpiredSignatureError:
+            return JsonResponse({"valid": False, "reason": "Token expirado"})
+        except jwt.InvalidTokenError:
+            return JsonResponse({"valid": False, "reason": "Token inválido"})
 
     except Exception as e:
         return JsonResponse({"valid": False, "error": str(e)}, status=500)
