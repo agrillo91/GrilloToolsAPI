@@ -46,6 +46,9 @@ def verify_license(request):
         }
 
         token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
+        if isinstance(token, bytes):
+            token = token.decode("utf-8")
+
 
         return JsonResponse({
             "valid": True,
