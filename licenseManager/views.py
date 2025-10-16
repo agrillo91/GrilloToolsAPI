@@ -32,7 +32,7 @@ def verify_license(request):
 
         # Verificación opcional de signature
         if signature:
-            data_string = f"{email}|{key}|{settings.LICENSE_SERVER_SECRET}"
+            data_string = f"{email}|{key}|{settings.SECRET_KEY}"
             expected_signature = hashlib.sha256(data_string.encode()).hexdigest()
             if signature != expected_signature:
                 return JsonResponse({"valid": False, "reason": "Firma inválida"})
@@ -72,7 +72,7 @@ def validate_token(request):
 
         try:
             # Decodificar el token
-            decoded = jwt.decode(token, settings.LICENSE_SERVER_SECRET, algorithms=["HS256"])
+            decoded = jwt.decode(token, settings.SECRET_KEY, algorithms=["HS256"])
             email = decoded.get("email")
             key = decoded.get("key")
 
