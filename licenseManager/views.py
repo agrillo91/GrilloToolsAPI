@@ -60,6 +60,7 @@ def verify_license(request):
         return JsonResponse({"valid": False, "error": str(e)}, status=500)
 
 # Validate Token
+@csrf_exempt
 def validate_token(request):
     """Valida el JWT enviado por el plugin."""
     if request.method != "POST":
