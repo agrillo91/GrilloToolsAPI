@@ -128,10 +128,12 @@ main {
 
 }
 
-#coverImage img{
-
+#coverImage {
     width: 300px;
+}
 
+#coverImage img{
+    width: 100%
 }
 
 #info h3{
