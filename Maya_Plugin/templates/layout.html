@@ -9,16 +9,27 @@
 </head>
 <body>
     <header>
-        <h1>Grillo Tools</h1>
+        
         <nav>
-            <ul>
+            <h1 id="title"><a href="{% url 'index' %}">Grillo Tools</a></h1>
+            <span id="slash">/</span>
+            <ul id="navLinks">
                 <li><a href="{% url 'index' %}">Get Started</a></li>
                 <li><a href="{% url 'docs' %}">Docs</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
             </ul>
         </nav>
+        
+        <div id="languageSelect">
+            <label for="language">Language:</label>
+            <select id="language" name="language">
+                <option value="es">Español</option>
+                <option value="en">English</option>
+                <option value="jp">日本語</option>
+            </select>
+        </div>
     </header>
-    <section>
+    <section> 
         {% block content %}
         {% endblock %}
     </section>

@@ -36,11 +36,11 @@ if not LICENSE_SERVER_SECRET:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'True') == 'True'
 
-# ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost').split(',')
 
-import ast
+# import ast
 
-ALLOWED_HOSTS = ast.literal_eval(os.getenv('ALLOWED_HOSTS', "['localhost']"))
+# ALLOWED_HOSTS = ast.literal_eval(os.getenv('ALLOWED_HOSTS', "['localhost']"))
 
 
 # Application definition
@@ -133,10 +133,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 # Ruta donde se recopilarán todos los archivos estáticos
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = BASE_DIR / 'static'
 
 # URL desde la que se servirán
-STATIC_URL = '/staticfiles/'
+STATIC_URL = '/static/'
 
 
 # Default primary key field type
