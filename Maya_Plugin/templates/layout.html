@@ -8,15 +8,14 @@
     <link rel="stylesheet" href="{% static 'styles/main.css' %}">
 </head>
 <body>
-    <header>
-        
+    <header>       
         <nav>
             <h1 id="title"><a href="{% url 'index' %}">Grillo Tools</a></h1>
             <span id="slash">/</span>
-            <ul id="navLinks">
-                <li><a href="{% url 'index' %}">Get Started</a></li>
-                <li><a href="{% url 'docs' %}">Docs</a></li>
-                <li><a href="{% url 'contact' %}">Contact</a></li>
+            <ul >
+                <li><a class="navLinks" href="{% url 'index' %}">Get Started</a></li>
+                <li><a class="navLinks" href="{% url 'docs' %}">Docs</a></li>
+                <li><a class="navLinks" href="{% url 'contact' %}">Contact</a></li>
             </ul>
         </nav>
         
