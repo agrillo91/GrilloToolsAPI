@@ -38,7 +38,7 @@ nav {
 
 #title {
     transform: skewX(-20deg);
-font-size: 40px;
+    font-size: 40px;
 }
 
 #title a{
@@ -60,14 +60,13 @@ font-size: 40px;
 nav ul {
     list-style: none;
     padding: 0;
-    /* padding-top: 20px; */
     display: flex;
     gap: 20px;
     flex-direction: row;
  }
 
  nav li {
-        background-color: white;
+    background-color: white;
     padding-left: 5px;
     padding-right: 5px;
     transform: skewX(-20deg);
@@ -85,12 +84,10 @@ nav ul {
 
 #languageSelect {
     margin-right: 50px;
-
     gap: 10px;
 }
 #languageSelect label {
     color: white;
-
     margin: 10px;
 }
 
@@ -109,7 +106,6 @@ section {
 footer {
     grid-area: footer;
     text-align: center;
-
     background: #333;
     color: white;
 }
@@ -121,26 +117,60 @@ footer {
     margin-bottom: 20px;
     color: #474747;
 }
+
 main {
     width: 1200px;
     box-shadow: #c0c0c0 5px 5px 20px;
     padding: 30px;
     color: #7a7a7a;   
+    display: flex;
+    gap: 40px;
 
 }
 
+#coverImage img{
+
+    width: 300px;
+
+}
+
+#info h3{
+    font-size: 18px;
+    margin-bottom: 0px;
+}
+
+#info p{
+    font-size: 14px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
 #downloadButton {
     background-color: #137dbe;
-    color: white;
     padding: 10px 20px;
-    text-decoration: none;
+    margin-top: 10px;
     transform: skewX(-20deg);
     border: none;
-    font-size: 14px;
     cursor: pointer;
+    width: fit-content
 
+}
+
+#downloadButton a{
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
 }
 
 #downloadButton:hover {
     background-color: #0b4c73;
+}
+
+
+/* CONTACT */
+#contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 400px;
 }

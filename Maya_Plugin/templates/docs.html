@@ -1,6 +1,28 @@
 {% extends "layout.html" %}
+{% load static %}
 {% block content %}
-<h2>Hola esto es Docs</h2>
-<p>Welcome to the Maya Plugin documentation. Here you will find all the information you need to get started.</p>
+<div>
+    <h3>Instalación:</h3>
+    <p>Descarga el archivo del plugin en el siguiente botón y sigue las instrucciones.</p>
 
+    <a id="downloadButton" href ="{% static 'downloads/GrilloPlugin.mll' %}" 
+    download 
+    class="btn btn-primary">
+    Descargar Plugin
+    </a>
+    <p>
+        Instrucciones de instalación:
+
+        <ol>
+            <li>Copia 'GrilloPlugin.mll' en la carpeta de plugins de Maya. Normalmente se encuentra en:</li>
+                <ul><li style="font-style: italic;">C:\Program Files\Autodesk\Maya20XX\bin\plug-ins</li></ul>
+            <li>Abre Autodesk Maya.</li>
+            <li>Ve a "Windows" &gt; "Settings/Preferences" &gt; "Plug-in Manager".</li>
+            <li>Haz clic en "Browse" y selecciona el archivo grilloTools.mll en la carpeta donde copiaste el archivo.</li>
+            <li>Marca las casillas "Loaded" y "Auto load" para activar el plugin.</li>
+            <li>Aparecerá en el menu superior de Maya las herramientas 'Grillo Plugin'</li>         
+        </ol>
+        <img src="{% static 'img/img1.png' %}" alt="Imagen1">
+    </p>
+</div>
 {% endblock %}

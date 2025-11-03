@@ -1,4 +1,22 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>Esto es contact</h2>
+<h2>Contacto</h2>
+<main>
+
+    <p>Si tienes alguna pregunta, comentario o necesitas asistencia, no dudes en contactarnos a través del siguiente formulario:</p>
+    <form id="contactForm" method="post">
+        {% csrf_token %}
+        <label for="name">Nombre:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">Correo Electrónico:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label for="message">Mensaje:</label><br>
+        <textarea id="message" name="message" rows="4" required></textarea><br><br>
+        
+        <input type="submit" value="Enviar">
+    </form>
+</main>
+
 {% endblock %}
