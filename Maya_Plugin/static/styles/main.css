@@ -65,8 +65,10 @@ nav ul {
     color: white
 }
 
-nav
-
+#navLinks a{
+    text-decoration: none;
+    color: white;
+}
 #languageSelect label {
     color: white;
 
