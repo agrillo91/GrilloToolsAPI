@@ -1,10 +1,11 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
+from django.utils import timezone
 import json, hashlib, jwt
 from datetime import timedelta, datetime, timezone
 
-from .models import LicenseManager as License
+from .models import LicenseManager as License, DeviceActivation
 
 @csrf_exempt
 def verify_license(request):
@@ -14,7 +15,8 @@ def verify_license(request):
     try:
         data = json.loads(request.body)
         email = data.get("email")
-        key = data.get("key")        # coincide con tu modelo
+        key = data.get("key")    
+        machine_id = data.get("machine_id")    
         signature = data.get("signature")  # opcional, seguridad extra
 
         if not email or not key:
@@ -37,10 +39,33 @@ def verify_license(request):
             if signature != expected_signature:
                 return JsonResponse({"valid": False, "reason": "Firma inválida"})
 
+        # Verificar si esta máquina ya está registrada    
+        activation = DeviceActivation.objects.filter(license=license_obj, machine_id=machine_id).first()
+        if activation:
+            # Ya activada → solo actualizamos la fecha de check-in
+            activation.last_checkin = timezone.now()
+            activation.save()
+        else:
+            # Nueva activación → comprobar límite
+            if not license_obj.can_activate():
+                return JsonResponse({
+                    "valid": False,
+                    "reason": "Límite de activaciones alcanzado"
+                }, status=403)
+
+            DeviceActivation.objects.create(
+                license=license_obj,
+                machine_id=machine_id,
+                ip_address=request.META.get("REMOTE_ADDR"),
+                activated_at=timezone.now(),
+                last_checkin=timezone.now(),
+            )
+
         # 🔒 Crear token JWT
         payload = {
             "email": email,
             "key": key,
+            "machine_id": machine_id,
             "exp": datetime.now(timezone.utc) + timedelta(days=7),
             "iat": datetime.now(timezone.utc),
         }
