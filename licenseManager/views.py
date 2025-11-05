@@ -3,7 +3,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 from django.utils import timezone
 import json, hashlib, jwt
-from datetime import timedelta, datetime, timezone
+from datetime import timedelta, datetime
 
 from .models import LicenseManager as License, DeviceActivation
 
@@ -66,8 +66,8 @@ def verify_license(request):
             "email": email,
             "key": key,
             "machine_id": machine_id,
-            "exp": datetime.now(tz=timezone.utc) + timedelta(days=7),
-            "iat": datetime.now(tz=timezone.utc),
+            "exp": timezone.now() + timedelta(days=7),
+            "iat": timezone.now(),
         }
 
         token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
