@@ -66,8 +66,8 @@ def verify_license(request):
             "email": email,
             "key": key,
             "machine_id": machine_id,
-            "exp": datetime.now(timezone.utc) + timedelta(days=7),
-            "iat": datetime.now(timezone.utc),
+            "exp": datetime.now(tz=timezone.utc) + timedelta(days=7),
+            "iat": datetime.now(tz=timezone.utc),
         }
 
         token = jwt.encode(payload, settings.SECRET_KEY, algorithm="HS256")
