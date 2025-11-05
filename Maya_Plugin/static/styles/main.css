@@ -151,6 +151,7 @@ main {
     padding: 10px 20px;
     margin-left: 10px;
     margin-top: 25px;
+    margin-bottom: 10px;
     transform: skewX(-20deg);
     border: none;
     cursor: pointer;
