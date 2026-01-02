@@ -24,15 +24,15 @@ class DeviceActivation(models.Model):
         on_delete=models.CASCADE,
         related_name="activations"
     )
-    # machine_id = models.CharField(max_length=64)
+    machine_id = models.CharField(max_length=64)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     activated_at = models.DateTimeField(default=timezone.now)
     last_checkin = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        # unique_together = ('license', 'machine_id')  # una máquina no puede activar dos veces la misma licencia
-        pass
+        unique_together = ('license', 'machine_id')  # una máquina no puede activar dos veces la misma licencia
+        # pass
 
     def __str__(self):
-        # return f"{self.machine_id} ({self.license.key})"
-        return f"{self.license.key} ({self.ip_address})"
+        return f"{self.machine_id} ({self.license.key})"
+        # return f"{self.license.key} ({self.ip_address})"

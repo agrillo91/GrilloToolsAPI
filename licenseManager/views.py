@@ -16,7 +16,7 @@ def verify_license(request):
         data = json.loads(request.body)
         email = data.get("email")
         key = data.get("key")    
-        # machine_id = data.get("machine_id")    
+        machine_id = data.get("machine_id")    
         signature = data.get("signature")  # opcional, seguridad extra
 
         if not email or not key:
@@ -40,8 +40,7 @@ def verify_license(request):
                 return JsonResponse({"valid": False, "reason": "Firma inválida"})
 
         # Verificar si esta máquina ya está registrada    
-        # activation = DeviceActivation.objects.filter(license=license_obj, machine_id=machine_id).first()
-        activation = DeviceActivation.objects.filter(license=license_obj).first()
+        activation = DeviceActivation.objects.filter(license=license_obj, machine_id=machine_id).first()
         if activation:
             # Ya activada → solo actualizamos la fecha de check-in
             activation.last_checkin = timezone.now()
@@ -66,7 +65,7 @@ def verify_license(request):
         payload = {
             "email": email,
             "key": key,
-            # "machine_id": machine_id,
+            "machine_id": machine_id,
             "exp": timezone.now() + timedelta(days=7),
             "iat": timezone.now(),
         }
