@@ -66,7 +66,7 @@ def verify_license(request):
         payload = {
             "email": email,
             "key": key,
-            "machine_id": machine_id,
+            # "machine_id": machine_id,
             "exp": timezone.now() + timedelta(days=7),
             "iat": timezone.now(),
         }
