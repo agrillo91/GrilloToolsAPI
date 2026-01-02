@@ -24,7 +24,7 @@ class DeviceActivation(models.Model):
         on_delete=models.CASCADE,
         related_name="activations"
     )
-    machine_id = models.CharField(max_length=64)
+    # machine_id = models.CharField(max_length=64)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
     activated_at = models.DateTimeField(default=timezone.now)
     last_checkin = models.DateTimeField(default=timezone.now)
