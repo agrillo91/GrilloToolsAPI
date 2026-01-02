@@ -30,7 +30,9 @@ class DeviceActivation(models.Model):
     last_checkin = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        unique_together = ('license', 'machine_id')  # una máquina no puede activar dos veces la misma licencia
-
+        # unique_together = ('license', 'machine_id')  # una máquina no puede activar dos veces la misma licencia
+        pass
+    
     def __str__(self):
-        return f"{self.machine_id} ({self.license.key})"
+        # return f"{self.machine_id} ({self.license.key})"
+        return f"{self.license.key} ({self.ip_address})"
