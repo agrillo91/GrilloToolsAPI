@@ -55,7 +55,7 @@ def verify_license(request):
 
             DeviceActivation.objects.create(
                 license=license_obj,
-                # machine_id=machine_id,
+                machine_id=machine_id,
                 ip_address=request.META.get("REMOTE_ADDR"),
                 activated_at=timezone.now(),
                 last_checkin=timezone.now(),

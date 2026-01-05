@@ -5,7 +5,7 @@ class LicenseManager(models.Model):
     email = models.EmailField(unique=True)
     key = models.CharField(max_length=128)
     is_active = models.BooleanField(default=True)
-    # max_devices = models.PositiveIntegerField(default=1)
+    max_devices = models.PositiveIntegerField(default=1)
     created_at = models.DateTimeField(auto_now_add=True)
 
 
@@ -34,5 +34,5 @@ class DeviceActivation(models.Model):
         # pass
 
     def __str__(self):
-        return f"{self.machine_id} ({self.license.key})"
-        # return f"{self.license.key} ({self.ip_address})"
+        # return f"{self.machine_id} ({self.license.key})"
+        return f"{self.license.key} ({self.ip_address})"
